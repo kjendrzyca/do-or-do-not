@@ -15,7 +15,6 @@ export default function generateTree() {
   for (let i = 1; i < 10; i++) {
     let parentId = Math.floor(Math.pow(Math.random(), 2) * i)
     const done = Boolean(parentId % 2)
-    console.log(done)
     tree[i] = {
       id: i,
       done: done,

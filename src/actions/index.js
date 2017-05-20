@@ -6,12 +6,12 @@ export const DELETE_NODE = 'DELETE_NODE'
 export const ADD_CHILD = 'ADD_CHILD'
 export const REMOVE_CHILD = 'REMOVE_CHILD'
 
+const getNextId = () => cuid()
+
 export const markAsDone = (nodeId) => ({
   type: TOGGLE_DONE,
   nodeId
 })
-
-const getNextId = () => cuid()
 
 export const createNode = () => ({
   type: CREATE_NODE,
