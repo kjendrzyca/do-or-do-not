@@ -35,10 +35,10 @@ export class Node extends Component {
   }
 
   renderChild = childId => {
-    const {id, done} = this.props
+    const {id, done, parentDone} = this.props
     return (
       <li key={childId}>
-        <ConnectedNode id={childId} parentId={id} parentDone={done} />
+        <ConnectedNode id={childId} parentId={id} parentDone={done || parentDone} />
       </li>
     )
   }
@@ -60,7 +60,7 @@ export class Node extends Component {
           {title}
         </span>
 
-        <input type="checkbox" checked={done} onChange={this.handleDoneClick}/>
+        <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick}/>
 
         {typeof parentId !== 'undefined' &&
           <a href="#" onClick={this.handleRemoveClick}
@@ -73,6 +73,7 @@ export class Node extends Component {
           {childIds.map(this.renderChild)}
           <li key="add">
             <input
+              disabled={done || parentDone}
               type="text"
               onChange={this.handleNewChildTitleChange}
               onKeyUp={this.handleAddChildClick}
