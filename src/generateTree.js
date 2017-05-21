@@ -7,7 +7,8 @@ export default function generateTree() {
       id: 0,
       done: false,
       title: 'ROOT',
-      childIds: []
+      childIds: [],
+      hiddenChildren: false
     }
   }
 
@@ -18,7 +19,8 @@ export default function generateTree() {
       id: i,
       done: done,
       title: chance.sentence({words: 3}),
-      childIds: []
+      childIds: [],
+      hiddenChildren: false
     }
     tree[parentId].childIds.push(i)
   }

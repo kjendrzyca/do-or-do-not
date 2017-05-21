@@ -6,7 +6,8 @@ import {
   deleteNode,
   addChild,
   removeChild,
-  sortChildren
+  sortChildren,
+  toggleHiddenChildren
 } from '../actions'
 
 describe('reducer', () => {
@@ -206,6 +207,31 @@ describe('reducer', () => {
         id: 'node_1',
         done: false,
         childIds: []
+      }
+    }
+
+    deepFreeze(stateBefore)
+    deepFreeze(action)
+
+    expect(reducer(stateBefore, action)).toEqual(stateAfter)
+  })
+
+  it('should handle TOGGLE_HIDDEN_CHILDREN action', () => {
+    const stateBefore = {
+      'node_0': {
+        id: 'node_0',
+        done: false,
+        childIds: [],
+        hiddenChildren: false
+      }
+    }
+    const action = toggleHiddenChildren('node_0')
+    const stateAfter = {
+      'node_0': {
+        id: 'node_0',
+        done: false,
+        childIds: [],
+        hiddenChildren: true
       }
     }
 

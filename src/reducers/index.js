@@ -4,7 +4,8 @@ import {
   REMOVE_CHILD,
   CREATE_NODE,
   DELETE_NODE,
-  SORT_CHILDREN
+  SORT_CHILDREN,
+  TOGGLE_HIDDEN_CHILDREN
 } from '../actions'
 
 const childIds = (state, action) => {
@@ -53,6 +54,12 @@ const node = (state, action) => {
       }
 
       return {...state}
+    }
+    case TOGGLE_HIDDEN_CHILDREN: {
+      return {
+        ...state,
+        hiddenChildren: !state.hiddenChildren
+      }
     }
     case ADD_CHILD:
     case REMOVE_CHILD:

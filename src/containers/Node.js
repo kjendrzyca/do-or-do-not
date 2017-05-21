@@ -40,8 +40,13 @@ export class Node extends Component {
     this.setState({newChildTitle: event.target.value})
   }
 
+  handleToggleHiddenChildren = event => {
+    const {toggleHiddenChildren, id} = this.props
+    toggleHiddenChildren(id)
+  }
+
   render() {
-    const {done, title, id, parentId, childIds, parentDone} = this.props
+    const {done, title, id, parentId, childIds, parentDone, hiddenChildren} = this.props
     const {newChildTitle} = this.state
     const markedAsDone = done || parentDone
 
@@ -53,14 +58,18 @@ export class Node extends Component {
           {title}
         </span>
 
-        <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick}/>
+        <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick} />
+
+        {childIds.length && <button onClick={this.handleToggleHiddenChildren} style={{boderStyle: 'none'}}>
+          {hiddenChildren  ? 'open' : 'close'}
+        </button>}
 
         {typeof parentId !== 'undefined' &&
           <button disabled={markedAsDone} onClick={this.handleRemoveClick} style={{boderStyle: 'none'}}>x</button>
         }
 
         <ul>
-          {childIds.map(childId => <li key={childId}>
+          {!hiddenChildren && childIds.map(childId => <li key={childId}>
             <ConnectedNode id={childId} parentId={id} parentDone={markedAsDone} />
           </li>)}
           <li key="add">

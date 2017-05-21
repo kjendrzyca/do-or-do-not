@@ -2,6 +2,7 @@ import cuid from 'cuid'
 
 export const TOGGLE_DONE = 'TOGGLE_DONE'
 export const SORT_CHILDREN = 'SORT_CHILDREN'
+export const TOGGLE_HIDDEN_CHILDREN = 'TOGGLE_HIDDEN_CHILDREN'
 export const CREATE_NODE = 'CREATE_NODE'
 export const DELETE_NODE = 'DELETE_NODE'
 export const ADD_CHILD = 'ADD_CHILD'
@@ -20,6 +21,11 @@ export const sortChildren = (nodeId, childId, isDone) => ({
   nodeId,
   childId,
   isDone
+})
+
+export const toggleHiddenChildren = (nodeId) => ({
+  type: TOGGLE_HIDDEN_CHILDREN,
+  nodeId
 })
 
 export const createNode = (title) => ({
