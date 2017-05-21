@@ -51,7 +51,7 @@ Needs to be deployed with `CONNECTION_STRING` node env variable to connect with 
 
 `express` is used to serve client code in this case.
 
-**Note: seeds db with fake date if there is none!**
+**Note: seeds db with fake data if there is none!**
 
 ### `npm run eject`
 
