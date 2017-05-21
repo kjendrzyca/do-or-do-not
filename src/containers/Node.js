@@ -34,15 +34,6 @@ export class Node extends Component {
     deleteNode(id)
   }
 
-  renderChild = childId => {
-    const {id, done, parentDone} = this.props
-    return (
-      <li key={childId}>
-        <ConnectedNode id={childId} parentId={id} parentDone={done || parentDone} />
-      </li>
-    )
-  }
-
   handleNewChildTitleChange = event => {
     event.preventDefault()
 
@@ -50,12 +41,14 @@ export class Node extends Component {
   }
 
   render() {
-    const {done, title, parentId, childIds, parentDone} = this.props
+    const {done, title, id, parentId, childIds, parentDone} = this.props
     const {newChildTitle} = this.state
+    const markedAsDone = done || parentDone
+
     return (
       <div>
         <span style={{
-          textDecoration: (done || parentDone) && 'line-through'
+          textDecoration: markedAsDone && 'line-through'
         }}>
           {title}
         </span>
@@ -63,17 +56,16 @@ export class Node extends Component {
         <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick}/>
 
         {typeof parentId !== 'undefined' &&
-          <a href="#" onClick={this.handleRemoveClick}
-             style={{ color: 'lightgray', textDecoration: 'none' }}>
-            ×
-          </a>
+          <button disabled={markedAsDone} onClick={this.handleRemoveClick} style={{boderStyle: 'none'}}>x</button>
         }
 
         <ul>
-          {childIds.map(this.renderChild)}
+          {childIds.map(childId => <li key={childId}>
+            <ConnectedNode id={childId} parentId={id} parentDone={markedAsDone} />
+          </li>)}
           <li key="add">
             <input
-              disabled={done || parentDone}
+              disabled={markedAsDone}
               type="text"
               onChange={this.handleNewChildTitleChange}
               onKeyUp={this.handleAddChildClick}
