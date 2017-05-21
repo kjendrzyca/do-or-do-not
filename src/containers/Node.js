@@ -1,23 +1,28 @@
 import React from 'react'
 import { Component } from 'react'
 import { connect } from 'react-redux'
-import Chance from 'chance'
 import * as actions from '../actions'
 
-const chance = new Chance()
-
 export class Node extends Component {
+  state = {
+    newChildTitle: ''
+  }
+
   handleDoneClick = () => {
     const { toggleDone, id } = this.props
     toggleDone(id)
   }
 
   handleAddChildClick = event => {
-    event.preventDefault()
+    if (event.key.toLowerCase() !== 'enter') {
+      return
+    }
 
-    const { addChild, createNode, id } = this.props
-    const childId = createNode(chance.sentence({words: 3})).nodeId
+    const {addChild, createNode, id} = this.props
+    const {newChildTitle} = this.state
+    const childId = createNode(newChildTitle).nodeId
     addChild(id, childId)
+    this.setState({newChildTitle: ''})
   }
 
   handleRemoveClick = event => {
@@ -37,8 +42,15 @@ export class Node extends Component {
     )
   }
 
+  handleNewChildTitleChange = event => {
+    event.preventDefault()
+
+    this.setState({newChildTitle: event.target.value})
+  }
+
   render() {
-    const { done, title, parentId, childIds } = this.props
+    const {done, title, parentId, childIds} = this.props
+    const {newChildTitle} = this.state
     return (
       <div>
         {title}
@@ -54,9 +66,12 @@ export class Node extends Component {
         <ul>
           {childIds.map(this.renderChild)}
           <li key="add">
-            <a href="#" onClick={this.handleAddChildClick}>
-              Add child
-            </a>
+            <input
+              type="text"
+              onChange={this.handleNewChildTitleChange}
+              onKeyPress={this.handleAddChildClick}
+              value={newChildTitle}
+            />
           </li>
         </ul>
       </div>
