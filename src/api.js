@@ -4,16 +4,20 @@ const logErrors = error => console.log(error)
 
 const wrappedFetch = async (method, payload, id) => {
   let request = {
-    'Content-Type': 'application/json',
+    headers: {
+      'Content-Type': 'application/json'
+    },
     method,
   }
 
   request = payload ? {
     ...request,
-    payload
+    body: JSON.stringify(payload)
   } : request
 
   const requestPath = id ? `${apiKey}/${id}` : apiKey
+
+  console.log('sending request', request)
 
   try {
     const response = await fetch(requestPath, request)

@@ -12,10 +12,16 @@ import './index.css'
 import api from './api'
 
 async function testApi () {
-  console.log(await api.getAll())
-  console.log(await api.create({id: 'nowy2'}))
-  console.log(await api.update({id: 'nowy3'}))
-  console.log(await api.delete(2))
+  // console.log(await api.getAll())
+  console.log(await api.create({
+    id: 'asdas79837198379',
+    done: false,
+    title: 'ROOT',
+    childIds: [],
+    hiddenChildren: false
+  }))
+  // console.log(await api.update({id: 'nowy3'}))
+  // console.log(await api.delete(2))
 }
 
 testApi()

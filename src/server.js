@@ -2,13 +2,9 @@ const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
 
+mongoose.promise = global.promise
 mongoose.connect('mongodb://localhost:27017/test', () => {
   mongoose.connection.db.dropDatabase()
-})
-const db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error:'))
-db.once('open', function() {
-  console.log('connected!')
 })
 
 const nodeSchema = mongoose.Schema({
@@ -21,21 +17,30 @@ const nodeSchema = mongoose.Schema({
 
 const Node = mongoose.model('Node', nodeSchema)
 
-Node.create({
-  _id: 'test123',
-  title: 'node-01',
-  done: false,
-  childIds: [],
-  hiddenChildren: false
-}, (error, node) => {
-  if (error) return console.log(error)
-  console.log('CREATED NODE', node)
-
+mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
+mongoose.connection.once('open', function() {
+  console.log('connected!')
   Node.find((error, nodes) => {
     if (error) return console.log(error)
-    return console.log(nodes)
+    return console.log('ALL DATA:', nodes)
   })
 })
+
+// Node.create({
+//   _id: 'test123',
+//   title: 'node-01',
+//   done: false,
+//   childIds: [],
+//   hiddenChildren: false
+// }, (error, node) => {
+//   if (error) return console.log(error)
+//   console.log('CREATED NODE', node)
+//
+//   Node.find((error, nodes) => {
+//     if (error) return console.log(error)
+//     return console.log(nodes)
+//   })
+// })
 
 // Node.find({ title: '' }, callback);
 
@@ -58,8 +63,23 @@ app.get(`${apiPath}`, (req, res) => {
 })
 
 app.post(`${apiPath}`, (req, res) => {
-  console.log('working POST', req.body)
-  res.json({stuff: 'working POST'})
+  const {
+    id, title, done, childIds, hiddenChildren
+  } = req.body
+
+  console.log('requested body:', req.body)
+
+  Node.create({
+    _id: id,
+    title: title,
+    done: done,
+    childIds: childIds,
+    hiddenChildren: hiddenChildren
+  }, (error, node) => {
+    if (error) return console.log(error)
+    console.log('created node:', node)
+    res.json(node)
+  })
 })
 
 app.put(`${apiPath}`, (req, res) => {
