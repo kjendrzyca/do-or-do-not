@@ -11,22 +11,21 @@ import {
 const childIds = (state, action) => {
   switch (action.type) {
     case ADD_CHILD:
-      return [ ...state, action.childId ]
+      return [ action.childId, ...state ]
     case REMOVE_CHILD:
       return state.filter(id => id !== action.childId)
+    case SORT_CHILDREN:
+      const {childId, isDone} = action
+      const filteredOutListOfIds = state.filter(id => id !== childId)
+
+      if (!isDone) {
+        return [childId].concat(filteredOutListOfIds)
+      }
+
+      return filteredOutListOfIds.concat(childId)
     default:
       return state
   }
-}
-
-const sorted = (childIds, nodeId, isDone) => {
-  const filteredOutListOfIds = childIds.filter(id => id !== nodeId)
-
-  if (!isDone) {
-    return [nodeId].concat(filteredOutListOfIds)
-  }
-
-  return filteredOutListOfIds.concat(nodeId)
 }
 
 const node = (state, action) => {
@@ -44,12 +43,12 @@ const node = (state, action) => {
         done: action.isDone
       }
     case SORT_CHILDREN: {
-      const {nodeId, childId, isDone} = action
+      const {nodeId} = action
 
       if (nodeId) {
         return {
           ...state,
-          childIds: sorted(state.childIds, childId, isDone)
+          childIds: childIds(state.childIds, action)
         }
       }
 

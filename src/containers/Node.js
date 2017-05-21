@@ -69,9 +69,6 @@ export class Node extends Component {
         }
 
         <ul>
-          {!hiddenChildren && childIds.map(childId => <li key={childId}>
-            <ConnectedNode id={childId} parentId={id} parentDone={markedAsDone} />
-          </li>)}
           <li key="add">
             <input
               disabled={markedAsDone}
@@ -81,6 +78,10 @@ export class Node extends Component {
               value={newChildTitle}
             />
           </li>
+
+          {!hiddenChildren && childIds.map(childId => <li key={childId}>
+            <ConnectedNode id={childId} parentId={id} parentDone={markedAsDone} />
+          </li>)}
         </ul>
       </div>
     )

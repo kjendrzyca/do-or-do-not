@@ -150,28 +150,38 @@ describe('reducer', () => {
     expect(reducer(stateBefore, action)).toEqual(stateAfter)
   })
 
-  it('should handle ADD_CHILD action', () => {
+  it('should handle ADD_CHILD action and add new child at the beggining', () => {
     const stateBefore = {
       'node_0': {
         id: 'node_0',
         done: false,
-        childIds: []
+        childIds: ['node_1']
       },
       'node_1': {
         id: 'node_1',
+        done: false,
+        childIds: []
+      },
+      'node_2': {
+        id: 'node_2',
         done: false,
         childIds: []
       }
     }
-    const action = addChild('node_0', 'node_1')
+    const action = addChild('node_0', 'node_2')
     const stateAfter = {
       'node_0': {
         id: 'node_0',
         done: false,
-        childIds: [ 'node_1' ]
+        childIds: ['node_2', 'node_1']
       },
       'node_1': {
         id: 'node_1',
+        done: false,
+        childIds: []
+      },
+      'node_2': {
+        id: 'node_2',
         done: false,
         childIds: []
       }
