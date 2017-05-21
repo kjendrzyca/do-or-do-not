@@ -29,16 +29,16 @@ export class Node extends Component {
   handleRemoveClick = event => {
     event.preventDefault()
 
-    const { removeChild, deleteNode, parentId, id } = this.props
+    const {removeChild, deleteNode, parentId, id} = this.props
     removeChild(parentId, id)
     deleteNode(id)
   }
 
   renderChild = childId => {
-    const { id } = this.props
+    const {id, done} = this.props
     return (
       <li key={childId}>
-        <ConnectedNode id={childId} parentId={id} />
+        <ConnectedNode id={childId} parentId={id} parentDone={done} />
       </li>
     )
   }
@@ -50,20 +50,25 @@ export class Node extends Component {
   }
 
   render() {
-    const {done, title, parentId, childIds} = this.props
+    const {done, title, parentId, childIds, parentDone} = this.props
     const {newChildTitle} = this.state
     return (
       <div>
-        {title}
-        {' '}
+        <span style={{
+          textDecoration: (done || parentDone) && 'line-through'
+        }}>
+          {title}
+        </span>
+
         <input type="checkbox" checked={done} onChange={this.handleDoneClick}/>
-        {' '}
+
         {typeof parentId !== 'undefined' &&
           <a href="#" onClick={this.handleRemoveClick}
              style={{ color: 'lightgray', textDecoration: 'none' }}>
             ×
           </a>
         }
+
         <ul>
           {childIds.map(this.renderChild)}
           <li key="add">
