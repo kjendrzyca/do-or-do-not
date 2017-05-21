@@ -1,6 +1,13 @@
 import deepFreeze from 'deep-freeze'
 import reducer from './index'
-import { toggleDone, createNode, deleteNode, addChild, removeChild } from '../actions'
+import {
+  toggleDone,
+  createNode,
+  deleteNode,
+  addChild,
+  removeChild,
+  sortChildren
+} from '../actions'
 
 describe('reducer', () => {
   it('should provide the initial state', () => {
@@ -15,12 +22,58 @@ describe('reducer', () => {
         childIds: []
       }
     }
-    const action = toggleDone('node_0')
+    const action = toggleDone('node_0', true)
     const stateAfter = {
       'node_0': {
         id: 'node_0',
         done: true,
         childIds: []
+      }
+    }
+
+    deepFreeze(stateBefore)
+    deepFreeze(action)
+
+    expect(reducer(stateBefore, action)).toEqual(stateAfter)
+  })
+
+  it('should handle SORT_CHILDREN action when children done flag was set to `true`', () => {
+    const stateBefore = {
+      'node_0': {
+        id: 'node_0',
+        done: false,
+        childIds: [1, 2, 3]
+      }
+    }
+    const action = sortChildren('node_0', 1, true)
+    const stateAfter = {
+      'node_0': {
+        id: 'node_0',
+        done: false,
+        childIds: [2, 3, 1]
+      }
+    }
+
+    deepFreeze(stateBefore)
+    deepFreeze(action)
+
+    expect(reducer(stateBefore, action)).toEqual(stateAfter)
+  })
+
+  it('should handle SORT_CHILDREN action when children done flag was set to `false`', () => {
+    const stateBefore = {
+      'node_0': {
+        id: 'node_0',
+        done: false,
+        childIds: [1, 2, 3]
+      }
+    }
+    const action = sortChildren('node_0', 3, false)
+    const stateAfter = {
+      'node_0': {
+        id: 'node_0',
+        done: false,
+        childIds: [3, 1, 2]
       }
     }
 

@@ -9,8 +9,9 @@ export class Node extends Component {
   }
 
   handleDoneClick = () => {
-    const { toggleDone, id } = this.props
-    toggleDone(id)
+    const { toggleDone, sortChildren, id, parentId, done } = this.props
+    toggleDone(id, !done)
+    sortChildren(parentId, id, !done)
   }
 
   handleAddChildClick = event => {
@@ -69,7 +70,7 @@ export class Node extends Component {
             <input
               type="text"
               onChange={this.handleNewChildTitleChange}
-              onKeyPress={this.handleAddChildClick}
+              onKeyUp={this.handleAddChildClick}
               value={newChildTitle}
             />
           </li>

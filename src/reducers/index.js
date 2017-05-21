@@ -1,4 +1,11 @@
-import { TOGGLE_DONE, ADD_CHILD, REMOVE_CHILD, CREATE_NODE, DELETE_NODE } from '../actions'
+import {
+  TOGGLE_DONE,
+  ADD_CHILD,
+  REMOVE_CHILD,
+  CREATE_NODE,
+  DELETE_NODE,
+  SORT_CHILDREN
+} from '../actions'
 
 const childIds = (state, action) => {
   switch (action.type) {
@@ -9,6 +16,16 @@ const childIds = (state, action) => {
     default:
       return state
   }
+}
+
+const sorted = (childIds, nodeId, isDone) => {
+  const filteredOutListOfIds = childIds.filter(id => id !== nodeId)
+
+  if (!isDone) {
+    return [nodeId].concat(filteredOutListOfIds)
+  }
+
+  return filteredOutListOfIds.concat(nodeId)
 }
 
 const node = (state, action) => {
@@ -23,8 +40,20 @@ const node = (state, action) => {
     case TOGGLE_DONE:
       return {
         ...state,
-        done: !state.done
+        done: action.isDone
       }
+    case SORT_CHILDREN: {
+      const {nodeId, childId, isDone} = action
+
+      if (nodeId) {
+        return {
+          ...state,
+          childIds: sorted(state.childIds, childId, isDone)
+        }
+      }
+
+      return {...state}
+    }
     case ADD_CHILD:
     case REMOVE_CHILD:
       return {
