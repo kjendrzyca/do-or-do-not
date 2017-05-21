@@ -1,25 +1,25 @@
 import deepFreeze from 'deep-freeze'
 import reducer from './index'
-import { increment, createNode, deleteNode, addChild, removeChild } from '../actions'
+import { toggleDone, createNode, deleteNode, addChild, removeChild } from '../actions'
 
 describe('reducer', () => {
   it('should provide the initial state', () => {
     expect(reducer(undefined, {})).toEqual({})
   })
 
-  it('should handle INCREMENT action', () => {
+  it('should handle TOGGLE_DONE action', () => {
     const stateBefore = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }
-    const action = increment('node_0')
+    const action = toggleDone('node_0')
     const stateAfter = {
       'node_0': {
         id: 'node_0',
-        counter: 1,
+        done: true,
         childIds: []
       }
     }
@@ -32,11 +32,12 @@ describe('reducer', () => {
 
   it('should handle CREATE_NODE action', () => {
     const stateBefore = {}
-    const action = createNode()
+    const action = createNode('some title')
     const stateAfter = {
       [action.nodeId]: {
         id: action.nodeId,
-        counter: 0,
+        done: false,
+        title: 'some title',
         childIds: []
       }
     }
@@ -51,27 +52,27 @@ describe('reducer', () => {
     const stateBefore = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: [ 'node_1' ]
       },
       'node_1': {
         id: 'node_1',
-        counter: 0,
+        done: false,
         childIds: []
       },
       'node_2': {
         id: 'node_2',
-        counter: 0,
+        done: false,
         childIds: [ 'node_3', 'node_4' ]
       },
       'node_3': {
         id: 'node_3',
-        counter: 0,
+        done: false,
         childIds: []
       },
       'node_4': {
         id: 'node_4',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }
@@ -79,12 +80,12 @@ describe('reducer', () => {
     const stateAfter = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: [ 'node_1' ]
       },
       'node_1': {
         id: 'node_1',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }
@@ -99,12 +100,12 @@ describe('reducer', () => {
     const stateBefore = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: []
       },
       'node_1': {
         id: 'node_1',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }
@@ -112,12 +113,12 @@ describe('reducer', () => {
     const stateAfter = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: [ 'node_1' ]
       },
       'node_1': {
         id: 'node_1',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }
@@ -132,12 +133,12 @@ describe('reducer', () => {
     const stateBefore = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: [ 'node_1' ]
       },
       'node_1': {
         id: 'node_1',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }
@@ -145,12 +146,12 @@ describe('reducer', () => {
     const stateAfter = {
       'node_0': {
         id: 'node_0',
-        counter: 0,
+        done: false,
         childIds: []
       },
       'node_1': {
         id: 'node_1',
-        counter: 0,
+        done: false,
         childIds: []
       }
     }

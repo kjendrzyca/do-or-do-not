@@ -1,7 +1,4 @@
-import Chance from 'chance'
 import { TOGGLE_DONE, ADD_CHILD, REMOVE_CHILD, CREATE_NODE, DELETE_NODE } from '../actions'
-
-const chance = new Chance()
 
 const childIds = (state, action) => {
   switch (action.type) {
@@ -20,7 +17,7 @@ const node = (state, action) => {
       return {
         id: action.nodeId,
         done: false,
-        title: chance.sentence({words: 3}),
+        title: action.title,
         childIds: []
       }
     case TOGGLE_DONE:

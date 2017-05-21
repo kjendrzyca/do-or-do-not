@@ -1,19 +1,22 @@
 import React from 'react'
 import { Component } from 'react'
 import { connect } from 'react-redux'
+import Chance from 'chance'
 import * as actions from '../actions'
+
+const chance = new Chance()
 
 export class Node extends Component {
   handleDoneClick = () => {
-    const { markAsDone, id } = this.props
-    markAsDone(id)
+    const { toggleDone, id } = this.props
+    toggleDone(id)
   }
 
   handleAddChildClick = event => {
     event.preventDefault()
 
     const { addChild, createNode, id } = this.props
-    const childId = createNode().nodeId
+    const childId = createNode(chance.sentence({words: 3})).nodeId
     addChild(id, childId)
   }
 

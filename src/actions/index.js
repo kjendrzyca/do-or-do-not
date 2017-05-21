@@ -8,14 +8,15 @@ export const REMOVE_CHILD = 'REMOVE_CHILD'
 
 const getNextId = () => cuid()
 
-export const markAsDone = (nodeId) => ({
+export const toggleDone = (nodeId) => ({
   type: TOGGLE_DONE,
   nodeId
 })
 
-export const createNode = () => ({
+export const createNode = (title) => ({
   type: CREATE_NODE,
-  nodeId: getNextId()
+  nodeId: getNextId(),
+  title
 })
 
 export const deleteNode = (nodeId) => ({
