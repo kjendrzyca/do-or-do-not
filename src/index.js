@@ -7,10 +7,18 @@ import reducer from './reducers'
 import generateTree from './generateTree'
 import Node from './containers/Node'
 
-import registerServiceWorker from './registerServiceWorker'
 import './index.css'
 
-registerServiceWorker()
+import api from './api'
+
+async function testApi () {
+  console.log(await api.getAll())
+  console.log(await api.create({id: 'nowy2'}))
+  console.log(await api.update({id: 'nowy3'}))
+  console.log(await api.delete(2))
+}
+
+testApi()
 
 const tree = generateTree()
 const store = createStore(
