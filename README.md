@@ -1,4 +1,6 @@
-A simple todo app built using [create-react-app](https://github.com/facebookincubator/create-react-app) and [material-ui](material-ui.com).
+A simple todo app built using [create-react-app](https://github.com/facebookincubator/create-react-app), [express](https://expressjs.com/) and [mongodb](https://www.mongodb.com/).
+
+Tested with the latest node (7.10.0 at the time of this writing).
 
 ## Available Scripts
 
