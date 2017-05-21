@@ -35,10 +35,6 @@ const Node = mongoose.model('Node', nodeSchema)
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
 mongoose.connection.once('open', function() {
   console.log('connected!')
-  Node.find((error, nodes) => {
-    if (error) return console.log(error)
-    return console.log('ALL DATA:', nodes)
-  })
 })
 
 const handleError = error => console.log(error)
@@ -74,7 +70,6 @@ app.post(`${apiPath}`, (req, res) => {
     hiddenChildren: hiddenChildren
   }, (error, node) => {
     if (error) return handleError(error)
-    console.log('created node:', node)
     res.json(node)
   })
 })
@@ -83,8 +78,6 @@ app.put(`${apiPath}`, (req, res) => {
   const {
     id, title, done, childIds, hiddenChildren
   } = req.body
-
-  console.log('requested body:', req.body)
 
   Node.findById(id, (error, node) => {
     if (error) return handleError(error)
@@ -96,7 +89,6 @@ app.put(`${apiPath}`, (req, res) => {
 
     node.save(function (error, updatedNode) {
       if (error) return handleError(error)
-      console.log('updatedNode node:', node)
       res.json(updatedNode)
     })
   })

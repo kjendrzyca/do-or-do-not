@@ -92,7 +92,8 @@ describe('reducer', () => {
         id: action.nodeId,
         done: false,
         title: 'some title',
-        childIds: []
+        childIds: [],
+        hiddenChildren: false
       }
     }
 
