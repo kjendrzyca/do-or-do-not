@@ -28,7 +28,7 @@
     "client": "REACT_APP_PASS=foo:bar react-scripts start",
     "server": "PASS=foo:bar node src/server.js",
     "server:watch": "PASS=foo:bar nodemon src/server.js",
-    "build": "react-scripts build",
+    "build": "REACT_APP_PASS=foo:bar react-scripts build",
     "test": "react-scripts test --env=jsdom --verbose",
     "eject": "react-scripts eject",
     "deploy": "now",

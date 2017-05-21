@@ -26,6 +26,14 @@ Uses super simple basic auth using env variabes (secures only `/api` requests):
 
 Those two need to match.
 
+Requires mongodb connection string. If not provided default localost:27017 will be used.
+
+`CONNECTION_STRING=localhost:27017/test npm start`
+
+Can be started with docker:
+
+`docker run --rm -p 127.0.0.1:27017:27017 mongo`
+
 **Note: Cleans up db with every rebuild and seeds with data if there is none!**
 
 ### `npm test`
