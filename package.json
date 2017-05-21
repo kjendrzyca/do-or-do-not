@@ -31,7 +31,7 @@
     "test": "react-scripts test --env=jsdom --verbose",
     "eject": "react-scripts eject",
     "deploy": "now",
-    "now-start": "NODE_ENV=production yarn run server"
+    "now-start": "NODE_ENV=production npm run server"
   },
   "proxy": "http://localhost:3001/"
 }

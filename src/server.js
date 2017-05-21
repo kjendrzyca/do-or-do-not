@@ -1,9 +1,15 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
-
 mongoose.Promise = global.Promise
-mongoose.connect('mongodb://localhost:27017/test', () => {
+
+const isProduction = () => process.env.NODE_ENV === 'production'
+
+const connectionString = process.env.CONNECTION_STRING || 'localhost:27017/test'
+mongoose.connect(`mongodb://${connectionString}`, () => {
+  if (isProduction()) {
+    return
+  }
   mongoose.connection.db.dropDatabase()
 })
 
@@ -42,7 +48,7 @@ const apiPath = '/api/todos'
 
 app.set('port', (process.env.PORT || 3001))
 
-if (process.env.NODE_ENV === 'production') {
+if (isProduction()) {
   app.use(express.static('build'))
 }
 
