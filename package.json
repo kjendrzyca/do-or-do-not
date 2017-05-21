@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "basic-auth": "^1.1.0",
     "body-parser": "^1.17.2",
     "chance": "^1.0.8",
     "cuid": "^1.3.8",
@@ -24,9 +25,9 @@
   },
   "scripts": {
     "start": "concurrently \"yarn run server:watch\" \"yarn run client\"",
-    "client": "react-scripts start",
-    "server": "node src/server.js",
-    "server:watch": "nodemon src/server.js",
+    "client": "REACT_APP_PASS=foo:bar react-scripts start",
+    "server": "PASS=foo:bar node src/server.js",
+    "server:watch": "PASS=foo:bar nodemon src/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom --verbose",
     "eject": "react-scripts eject",

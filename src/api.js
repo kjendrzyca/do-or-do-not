@@ -1,11 +1,14 @@
 const apiKey = '/api/todos'
-
+const superSecret = 'superSecret'
 const logErrors = error => console.log(error)
+
+const pass = process.env.REACT_APP_PASS
 
 const wrappedFetch = async (method, payload, id) => {
   let request = {
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Authorization': `Basic ${btoa(pass)}`
     },
     method,
   }

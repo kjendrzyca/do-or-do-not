@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
+const authMiddleware = require('./authMiddleware')
 mongoose.Promise = global.Promise
 
 const isProduction = () => process.env.NODE_ENV === 'production'
@@ -44,6 +45,7 @@ const handleError = error => console.log(error)
 
 const app = express()
 app.use(bodyParser.json())
+app.use(authMiddleware)
 const apiPath = '/api/todos'
 
 app.set('port', (process.env.PORT || 3001))
