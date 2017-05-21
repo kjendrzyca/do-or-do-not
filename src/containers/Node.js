@@ -61,7 +61,7 @@ export class Node extends Component {
 
           <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick} />
 
-          {childIds.length && <button onClick={this.handleToggleHiddenChildren} style={{boderStyle: 'none'}}>
+          {Boolean(childIds.length) && <button onClick={this.handleToggleHiddenChildren} style={{boderStyle: 'none'}}>
             {hiddenChildren  ? 'open' : 'close'}
           </button>}
 

@@ -35,6 +35,7 @@ const node = (state, action) => {
         id: action.nodeId,
         done: false,
         title: action.title,
+        hiddenChildren: false,
         childIds: []
       }
     case TOGGLE_DONE:

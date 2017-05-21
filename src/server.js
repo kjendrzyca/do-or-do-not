@@ -15,6 +15,14 @@ const nodeSchema = mongoose.Schema({
     hiddenChildren: {type: Boolean, required: true}
 })
 
+nodeSchema.set('toJSON', {
+     transform: function (doc, ret, options) {
+         ret.id = ret._id
+         delete ret._id
+         delete ret.__v
+     }
+})
+
 const Node = mongoose.model('Node', nodeSchema)
 
 mongoose.connection.on('error', console.error.bind(console, 'connection error:'))
@@ -41,7 +49,6 @@ if (process.env.NODE_ENV === 'production') {
 app.get(`${apiPath}`, (req, res) => {
   Node.find((error, nodes) => {
     if (error) return handleError(error)
-    console.log(nodes)
     return res.json(nodes)
   })
 })
@@ -50,8 +57,6 @@ app.post(`${apiPath}`, (req, res) => {
   const {
     id, title, done, childIds, hiddenChildren
   } = req.body
-
-  console.log('requested body:', req.body)
 
   Node.create({
     _id: id,
@@ -93,7 +98,7 @@ app.delete(`${apiPath}/:id`, (req, res) => {
   const {id} = req.params
   Node.deleteOne({ _id: id }, error => {
     if (error) return handleError(error)
-    res.json({stuff: 'working DELETE'})
+    res.json({})
   })
 })
 
