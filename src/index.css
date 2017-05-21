@@ -3,3 +3,37 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+li {
+  line-height: 25px;
+  margin: 5px;
+}
+
+input {
+  line-height: 25px;
+  border: none;
+  border-bottom: 1px solid green;
+  margin: 5px;
+}
+
+input:focus {
+    outline-width: 0;
+}
+
+input[type=checkbox] {
+  margin: 5px 10px;
+  line-height: 32px;
+  width: 18px;
+  height: 18px;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+button {
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: 050505;
+  line-height: 25px;
+  margin: 5px;
+}

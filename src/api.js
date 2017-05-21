@@ -1,5 +1,4 @@
 const apiKey = '/api/todos'
-const superSecret = 'superSecret'
 const logErrors = error => console.log(error)
 
 const pass = process.env.REACT_APP_PASS
