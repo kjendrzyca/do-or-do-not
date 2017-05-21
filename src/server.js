@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const express = require('express')
 const bodyParser = require('body-parser')
 
-mongoose.promise = global.promise
+mongoose.Promise = global.Promise
 mongoose.connect('mongodb://localhost:27017/test', () => {
   mongoose.connection.db.dropDatabase()
 })
@@ -44,6 +44,8 @@ mongoose.connection.once('open', function() {
 
 // Node.find({ title: '' }, callback);
 
+const handleError = error => console.log(error)
+
 const app = express()
 app.use(bodyParser.json())
 const apiPath = '/api/todos'
@@ -56,7 +58,7 @@ if (process.env.NODE_ENV === 'production') {
 
 app.get(`${apiPath}`, (req, res) => {
   Node.find((error, nodes) => {
-    if (error) return console.log(error)
+    if (error) return handleError(error)
     console.log(nodes)
     return res.json(nodes)
   })
@@ -76,15 +78,33 @@ app.post(`${apiPath}`, (req, res) => {
     childIds: childIds,
     hiddenChildren: hiddenChildren
   }, (error, node) => {
-    if (error) return console.log(error)
+    if (error) return handleError(error)
     console.log('created node:', node)
     res.json(node)
   })
 })
 
 app.put(`${apiPath}`, (req, res) => {
-  console.log('working PUT', req.body)
-  res.json({stuff: 'working PUT'})
+  const {
+    id, title, done, childIds, hiddenChildren
+  } = req.body
+
+  console.log('requested body:', req.body)
+
+  Node.findById(id, (error, node) => {
+    if (error) return handleError(error)
+
+    node.title = title
+    node.done = done
+    node.childIds = childIds
+    node.hiddenChildren = hiddenChildren
+
+    node.save(function (error, updatedNode) {
+      if (error) return handleError(error)
+      console.log('updatedNode node:', node)
+      res.json(updatedNode)
+    })
+  })
 })
 
 app.delete(`${apiPath}/:id`, (req, res) => {

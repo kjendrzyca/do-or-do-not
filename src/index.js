@@ -20,8 +20,14 @@ async function testApi () {
     childIds: [],
     hiddenChildren: false
   }))
-  // console.log(await api.update({id: 'nowy3'}))
-  // console.log(await api.delete(2))
+  console.log(await api.update({
+    id: 'asdas79837198379',
+    done: true,
+    title: 'ROOT1',
+    childIds: [1,2,3],
+    hiddenChildren: true
+  }))
+  console.log(await api.delete('asdas79837198379'))
 }
 
 testApi()
