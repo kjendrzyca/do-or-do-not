@@ -108,8 +108,11 @@ app.put(`${apiPath}`, (req, res) => {
 })
 
 app.delete(`${apiPath}/:id`, (req, res) => {
-  console.log('working DELETE', req.params)
-  res.json({stuff: 'working DELETE'})
+  const {id} = req.params
+  Node.deleteOne({ _id: id }, error => {
+    if (error) return handleError(error)
+    res.json({stuff: 'working DELETE'})
+  })
 })
 
 app.listen(app.get('port'), () => {
