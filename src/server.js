@@ -26,24 +26,6 @@ mongoose.connection.once('open', function() {
   })
 })
 
-// Node.create({
-//   _id: 'test123',
-//   title: 'node-01',
-//   done: false,
-//   childIds: [],
-//   hiddenChildren: false
-// }, (error, node) => {
-//   if (error) return console.log(error)
-//   console.log('CREATED NODE', node)
-//
-//   Node.find((error, nodes) => {
-//     if (error) return console.log(error)
-//     return console.log(nodes)
-//   })
-// })
-
-// Node.find({ title: '' }, callback);
-
 const handleError = error => console.log(error)
 
 const app = express()
