@@ -52,21 +52,21 @@ export class Node extends Component {
 
     return (
       <div>
-        <span style={{
-          textDecoration: markedAsDone && 'line-through'
-        }}>
-          {title}
-        </span>
+        {typeof parentId !== 'undefined' && <div>
+          <span style={{
+            textDecoration: markedAsDone && 'line-through'
+          }}>
+            {title}
+          </span>
 
-        <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick} />
+          <input type="checkbox" disabled={parentDone} checked={done} onChange={this.handleDoneClick} />
 
-        {childIds.length && <button onClick={this.handleToggleHiddenChildren} style={{boderStyle: 'none'}}>
-          {hiddenChildren  ? 'open' : 'close'}
-        </button>}
+          {childIds.length && <button onClick={this.handleToggleHiddenChildren} style={{boderStyle: 'none'}}>
+            {hiddenChildren  ? 'open' : 'close'}
+          </button>}
 
-        {typeof parentId !== 'undefined' &&
           <button disabled={markedAsDone} onClick={this.handleRemoveClick} style={{boderStyle: 'none'}}>x</button>
-        }
+        </div>}
 
         <ul>
           <li key="add">
