@@ -8,7 +8,7 @@ Tested with the latest node (7.10.0 at the time of this writing).
 
 ## Available Scripts
 
-In the project directory, you can run:
+Following commands can be run in the project directory.
 
 ### `npm start`
 
