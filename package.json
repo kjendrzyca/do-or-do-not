@@ -7,7 +7,7 @@
     "body-parser": "^1.17.2",
     "chance": "^1.0.8",
     "cuid": "^2.1.8",
-    "express": "^4.15.3",
+    "express": "^4.17.3",
     "mongoose": "^5.10.9",
     "react": "^16.14.0",
     "react-dom": "^16.14.0",
